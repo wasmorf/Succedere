@@ -782,17 +782,17 @@ c1_base:{act:CH1,title:L('Sala de reunião','Meeting room','Sala de reuniones'),
 c1_arsenal:{act:CH1,title:L('O arsenal','The armory','El arsenal'),
   text:()=>P(L(`Derick te leva até o arsenal, uma sala de grades com cheiro de óleo de máquina. "Regra da casa: recruta leva no máximo duas coisas de categoria I. O resto, o que couber na mochila."
 
-Ele pega uma lança da parede e te olha, desconfiado. "Quem escolhe lança em pleno século XXI?" Depois sorri. "Combina com você. Mas leva a pistola também."
+Entre fuzis, pistolas e escopetas, seus olhos param numa coisa só: uma lança pendurada no fundo da parede, de haste escura e lâmina longa. Você não consegue parar de olhar para ela. Derick percebe. Acompanha seu olhar, suspira e tira a lança da parede. Te olha, desconfiado. "Quem escolhe lança em pleno século XXI?" Depois sorri. "Combina com você. Mas leva a pistola também."
 
 Equipe: ${teamNames().join(', ')}.`,
 `Derick takes you to the armory, a caged room that smells of machine oil. "House rule: recruits take two category I items, max. Everything else, whatever fits in the backpack."
 
-He takes a spear off the wall and eyes you. "Who picks a spear in the twenty-first century?" Then he smiles. "Suits you. But take the pistol too."
+Among rifles, pistols and shotguns, your eyes stop on one thing only: a spear hanging at the back of the wall, dark shaft, long blade. You can't stop staring at it. Derick notices. He follows your gaze, sighs and takes the spear down. He eyes you. "Who picks a spear in the twenty-first century?" Then he smiles. "Suits you. But take the pistol too."
 
 Team: ${teamNames().join(', ')}.`,
 `Derick te lleva al arsenal, una sala enrejada con olor a aceite de máquina. "Regla de la casa: un recluta lleva como máximo dos cosas de categoría I. Lo demás, lo que quepa en la mochila."
 
-Descuelga una lanza de la pared y te mira, receloso. "¿Quién elige una lanza en pleno siglo XXI?" Luego sonríe. "Te queda. Pero llévate también la pistola."
+Entre fusiles, pistolas y escopetas, tus ojos se detienen en una sola cosa: una lanza colgada al fondo de la pared, de asta oscura y hoja larga. No puedes dejar de mirarla. Derick se da cuenta. Sigue tu mirada, suspira y descuelga la lanza. Te mira, receloso. "¿Quién elige una lanza en pleno siglo XXI?" Luego sonríe. "Te queda. Pero llévate también la pistola."
 
 Equipo: ${teamNames().join(', ')}.`)),
   choices:()=>[{label:L('Abrir o arsenal','Open the armory','Abrir el arsenal'),main:true,run:()=>({arsenal:{next:'c1_saida',patente:'recruta',suggest:'koranna'}})}]},
