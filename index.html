@@ -442,7 +442,6 @@ function buildData(){
   };
   buildItems();buildStoryData();buildScenes();
 }
-
 function buildItems(){
   const G={simples:L('Armas simples','Simple weapons','Armas simples'),taticas:L('Armas táticas','Tactical weapons','Armas tácticas'),mun:L('Munição','Ammunition','Munición'),prot:L('Proteções','Protection','Protecciones'),acc:L('Acessórios','Accessories','Accesorios'),exp:L('Explosivos','Explosives','Explosivos'),op:L('Itens operacionais','Operational items','Objetos operacionales')};
   const SUB={ml:L('Corpo a corpo · leves','Melee · light','Cuerpo a cuerpo · ligeras'),m1:L('Corpo a corpo · uma mão','Melee · one-handed','Cuerpo a cuerpo · una mano'),m2:L('Corpo a corpo · duas mãos','Melee · two-handed','Cuerpo a cuerpo · dos manos'),d2:L('Disparo · duas mãos','Ranged · two-handed','Disparo · dos manos'),fl:L('Fogo · leves','Firearms · light','De fuego · ligeras'),f1:L('Fogo · uma mão','Firearms · one-handed','De fuego · una mano'),f2:L('Fogo · duas mãos','Firearms · two-handed','De fuego · dos manos')};
@@ -546,7 +545,6 @@ function buildItems(){
     instrumental:m(L('Instrumental','Instrumental','Instrumental'),'acc',L('funciona como kit de perícia','works as a skill kit','funciona como kit de pericia'))
   };
 }
-
 /* ================= EQUIPAMENTO (lógica) ================= */
 function catCount(inv,c){return inv.filter(i=>itemCat(i)===c).length}
 function critStr(c){const [m,x]=c;return m<20?(x>2?`${m}/x${x}`:`${m}`):`x${x}`}
@@ -625,7 +623,6 @@ function gearBonus(skl,ctx=[]){
 function itemDT(attr='AGI'){return 10+S.attr[attr]+Math.floor(S.nex/5)}
 const SUGGEST={especialista:[['lanca'],['pistola'],['curtas'],['leve'],['soqueira'],['sobrev']]};
 function suggestInv(cls){const inv=(SUGGEST[cls]||SUGGEST.especialista).map(([id,o])=>Object.assign(newInst(id),o||{}));const cap=capacity(D.attr.FOR,inv);while(spacesUsed(inv)>cap&&inv.length)inv.pop();return inv}
-
 function buildStoryData(){
   ENEMIES={
     zumbi:{eyes:true,name:L('Zumbi de Sangue','Blood Zombie','Zombi de Sangre'),kind:L('Criatura de Sangue','Blood Creature','Criatura de Sangre'),el:'sangue',pv:16,def:11,atk:4,dmg:'1d6+1',res:2,init:1,
@@ -692,7 +689,7 @@ function buildStoryData(){
     planta:c(L('Planta do hospital','Hospital blueprint','Plano del hospital'),L('A planta marca um cômodo que não existe, atrás da parede leste, alinhado ao poço da escada. Ninguém constrói um cômodo sem porta.','The blueprint marks a room that doesn\'t exist, behind the east wall, lined up with the stairwell. Nobody builds a room with no door.','El plano marca un cuarto que no existe, detrás de la pared este, alineado con el hueco de la escalera. Nadie construye un cuarto sin puerta.')),
     dono:c(L('O dono do hospital','The hospital\'s owner','El dueño del hospital'),L('Em 2014 o hospital foi comprado por uma empresa: Wezen Participações. A empresa do seu pai.','In 2014 the hospital was bought by a company: Wezen Holdings. Your father\'s company.','En 2014 el hospital fue comprado por una empresa: Wezen Participaciones. La empresa de tu padre.')),
     brasao:c(L('O brasão Wezen','The Wezen crest','El escudo Wezen'),L('Os zumbis da mansão carregavam o brasão da família no peito. Você guardou um. O metal ainda está quente.','The mansion\'s zombies carried the family crest on their chests. You kept one. The metal is still warm.','Los zombis de la mansión llevaban el escudo familiar en el pecho. Guardaste uno. El metal aún está tibio.')),
-    foto:c(L('Foto no escritório','Photo in the study','Foto en el despacho'),L('Você e Eros crianças, no quintal, com o gato preto de vocês no colo. No verso, na letra da sua mãe: "meus três".','You and Eros as kids in the backyard, your black cat in your arms. On the back, in your mother\'s handwriting: "my three".','Tú y Eros de niños en el patio, con su gato negro en brazos. Al reverso, con la letra de tu madre: "mis tres".')),
+    foto:c(L('Foto no escritório','Photo in the study','Foto en el despacho'),L('Você e Eros crianças, no quintal, com o Skart, o gato preto de vocês, no colo. Na legenda, na letra do seu pai: "O dia em que adotamos o Skart." No verso, na letra da sua mãe: "meus três".','You and Eros as kids in the backyard, with Skart, your black cat, in your arms. The caption, in your father\'s handwriting: "The day we adopted Skart." On the back, in your mother\'s handwriting: "my three".','Tú y Eros de niños en el patio, con Skart, su gato negro, en brazos. En la leyenda, con la letra de tu padre: "El día que adoptamos a Skart." Al reverso, con la letra de tu madre: "mis tres".')),
     ferimentos:c(L('Os ferimentos de Bob','Bob\'s wounds','Las heridas de Bob'),L('Três cortes paralelos, do ombro ao quadril, sempre da esquerda para a direita. É uma assinatura de espada.','Three parallel cuts, shoulder to hip, always left to right. It\'s a sword signature.','Tres cortes paralelos, del hombro a la cadera, siempre de izquierda a derecha. Es una firma de espada.')),
     frasco:c(L('O frasco','The vial','El frasco'),L('O frasco que transformou Luck tem a etiqueta do almoxarifado da Base. Alguém lá de dentro roubou e entregou.','The vial that transformed Luck carries a label from the Base\'s supply room. Someone inside stole it and handed it over.','El frasco que transformó a Luck tiene la etiqueta del almacén de la Base. Alguien de adentro lo robó y lo entregó.')),
     endereco:c(L('Endereço no celular de Aline','Address on Aline\'s phone','Dirección en el celular de Aline'),L('Um único endereço salvo como "casa": uma fábrica abandonada na zona industrial.','A single address saved as "home": an abandoned factory in the industrial district.','Una sola dirección guardada como "casa": una fábrica abandonada en la zona industrial.')),
@@ -701,7 +698,6 @@ function buildStoryData(){
     verdade:c(L('A confissão de Felipe','Felipe\'s confession','La confesión de Felipe'),L('Formiga e Luck foram cobaias do seu pai. Aline os libertou. O ataque à mansão foi vingança. Anos depois, Eros os procurou para trazer você de volta, e eles o usaram.','Formiga and Luck were your father\'s test subjects. Aline set them free. The attack on the mansion was revenge. Years later, Eros came to them to bring you back, and they used him.','Formiga y Luck fueron cobayas de tu padre. Aline los liberó. El ataque a la mansión fue venganza. Años después, Eros los buscó para traerte de vuelta, y lo usaron.'))
   };
 }
-
 function buildScenes(){
 const A1=L('Ato I · ','Act I · ','Acto I · ');const A2=L('Ato II · ','Act II · ','Acto II · ');
 const CH1=A1+L('Cap. 1 · A Ordem','Ch. 1 · The Order','Cap. 1 · La Orden');
@@ -1138,7 +1134,6 @@ El punto en el mapa deja de moverse. Derick amplía. Reconoces la calle antes qu
 };
 buildScenes2({A1,A2,CH4,CH5,CH6,CH7,EPI});
 }
-
 function buildScenes2({A1,A2,CH4,CH5,CH6,CH7,EPI}){
 Object.assign(SCENES,{
 m1_vigia:{act:CH4,title:L('A casa','The house','La casa'),checkpoint:true,
@@ -1162,17 +1157,23 @@ Vigilan durante una hora. Leon y Jon, los dos exmilitares de Roger, cubren los f
   ]},
 
 m2_revelacao:{act:CH4,title:L('O que caiu do bolso','What fell from the pocket','Lo que cayó del bolsillo'),
-  text:()=>P(L(`Do que restou do roupão, cai um porta-retratos pequeno. Vidro rachado. Uma foto de família: seu pai, sua mãe, Eros, você.
+  text:()=>P(L(`Do que restou do roupão, cai um porta-retratos pequeno. Vidro rachado. Você conhece essa foto: você e Eros crianças, no quintal, segurando juntos um filhote de gato preto magrelo, de olhos amarelos. Embaixo, na letra do seu pai: "O dia em que adotamos o Skart."
+
+Skart. O gato que vocês tentaram trazer de volta. O ritual que custou o seu braço e o olho do Eros. Seu pai guardava isso no bolso.
 
 O roupão de seda era o do seu pai. A aliança no que sobrou da mão também.
 
 A Besta de Sangue era Frederick Wezen.`,
-`From what's left of the robe, a small picture frame falls out. Cracked glass. A family photo: your father, your mother, Eros, you.
+`From what's left of the robe, a small picture frame falls out. Cracked glass. You know this photo: you and Eros as kids in the backyard, holding a scrawny black kitten with yellow eyes between you. Underneath, in your father's handwriting: "The day we adopted Skart."
+
+Skart. The cat the two of you tried to bring back. The ritual that cost you your arm and Eros his eye. Your father kept this in his pocket.
 
 The silk robe was your father's. So was the wedding ring on what's left of the hand.
 
 The Blood Beast was Frederick Wezen.`,
-`De lo que queda de la bata cae un portarretratos pequeño. Vidrio rajado. Una foto familiar: tu padre, tu madre, Eros, tú.
+`De lo que queda de la bata cae un portarretratos pequeño. Vidrio rajado. Conoces esa foto: tú y Eros de niños en el patio, sosteniendo entre los dos a un gatito negro flacucho de ojos amarillos. Abajo, con la letra de tu padre: "El día que adoptamos a Skart."
+
+Skart. El gato que intentaron traer de vuelta. El ritual que te costó el brazo y a Eros el ojo. Tu padre guardaba esto en el bolsillo.
 
 La bata de seda era la de tu padre. El anillo en lo que queda de la mano, también.
 
@@ -1196,7 +1197,7 @@ Levantas uno de los escudos del suelo. No sabes por qué. Te lo guardas en el bo
   choices:()=>[{label:L('Subir ao escritório do seu pai','Go up to your father\'s study','Subir al despacho de tu padre'),main:true,run:()=>({go:'m3_escritorio'})}]},
 
 m3_escritorio:{act:CH4,title:L('O escritório','The study','El despacho'),
-  text:()=>P(L(`O armário de livros está destruído, e atrás dele há uma porta de aço com um teclado. Em cima do teclado, alguém prendeu uma foto com fita.`,`The bookcase is destroyed, and behind it there's a steel door with a keypad. Above the keypad, someone has taped a photo.`,`La biblioteca está destrozada, y detrás hay una puerta de acero con un teclado. Encima del teclado, alguien pegó una foto con cinta.`))+addClue('foto')+P(L(`No visor: "SENHA: O TERCEIRO".`,`On the display: "PASSWORD: THE THIRD".`,`En la pantalla: "CONTRASEÑA: EL TERCERO".`))+
+  text:()=>P(L(`O armário de livros está destruído, e atrás dele há uma porta de aço com um teclado. Em cima do teclado, alguém prendeu com fita uma cópia da mesma foto do porta-retratos: você, Eros e o Skart no quintal.`,`The bookcase is destroyed, and behind it there's a steel door with a keypad. Above the keypad, someone has taped a copy of the same photo from the frame: you, Eros and Skart in the backyard.`,`La biblioteca está destrozada, y detrás hay una puerta de acero con un teclado. Encima del teclado, alguien pegó con cinta una copia de la misma foto del portarretratos: tú, Eros y Skart en el patio.`))+addClue('foto')+P(L(`No visor: "SENHA: O TERCEIRO".`,`On the display: "PASSWORD: THE THIRD".`,`En la pantalla: "CONTRASEÑA: EL TERCERO".`))+
     (S.flags.senha_erros?P(L(`Tentativas erradas: ${S.flags.senha_erros}/3.`,`Wrong attempts: ${S.flags.senha_erros}/3.`,`Intentos fallidos: ${S.flags.senha_erros}/3.`)):''),
   choices:()=>[
     {input:{placeholder:L('Senha','Password','Contraseña')},label:L('Digitar','Enter','Ingresar'),
@@ -1387,7 +1388,7 @@ Café, pan de queso e historias: VT entrenó a los tres hermanos Zart antes de l
   choices:()=>[{label:L('Abrir o arsenal de VT','Open VT\'s armory','Abrir el arsenal de VT'),main:true,run:()=>({arsenal:{next:'a5_revelacao',patente:'operador'}})}]},
 
 a5_revelacao:{act:CH5,title:L('Conversas reservadas','Private talks','Charlas privadas'),
-  text:()=>P(L(`VT chama Mada para uma sala e fecha a porta. Kavyur fica com você e com Derick. Mada pediu para ele manter a pistola apontada para você a conversa toda. "Nada pessoal", diz Kavyur. "Ele confia pouco. Eu confio menos."`,`VT calls Mada into a room and closes the door. Kavyur stays with you and Derick. Mada asked him to keep his pistol pointed at you the whole time. "Nothing personal," says Kavyur. "He doesn't trust much. I trust less."`,`VT llama a Mada a una sala y cierra la puerta. Kavyur se queda contigo y con Derick. Mada le pidió que mantuviera la pistola apuntándote toda la charla. "Nada personal", dice Kavyur. "Él confía poco. Yo confío menos."`)),
+  text:()=>P(L(`VT chama Mada para uma sala. Antes de fechar a porta, olha para Kavyur e aponta o queixo na sua direção: "Arma nela. A conversa toda." Kavyur levanta a pistola sem discutir e fica com você e com Derick. "Nada pessoal", diz Kavyur. "Ordem do VT. Ele confia pouco. Eu confio menos."`,`VT calls Mada into a room. Before closing the door, he looks at Kavyur and juts his chin toward you: "Gun on her. The whole time." Kavyur raises his pistol without a word. He stays with you and Derick. "Nothing personal," says Kavyur. "VT's orders. He doesn't trust much. I trust less."`,`VT llama a Mada a una sala. Antes de cerrar la puerta, mira a Kavyur y señala hacia ti con el mentón: "Arma sobre ella. Toda la charla." Kavyur levanta la pistola sin discutir. Se queda contigo y con Derick. "Nada personal", dice Kavyur. "Orden de VT. Él confía poco. Yo confío menos."`)),
   choices:()=>[
     {once:'ouvir_vt',label:L('Tentar ouvir a conversa de VT e Mada','Try to overhear VT and Mada','Intentar escuchar la charla de VT y Mada'),test:{sk:'Furtividade',dt:15},
       ok:()=>{S.flags.ouviu_vt=true;return {text:P(L(`"...o Eros não sabia que ela estava viva, Mada. Ele achava que tinha deixado a irmã morrer. Procurou aqueles três para trazer ela de volta com ritual. Eles usaram isso." Você cobre a boca com a mão.`,`"...Eros didn't know she was alive, Mada. He thought he'd let his sister die. He went to those three to bring her back with a ritual. They used that." You cover your mouth with your hand.`,`"...Eros no sabía que ella estaba viva, Mada. Creía que había dejado morir a su hermana. Buscó a esos tres para traerla de vuelta con un ritual. Ellos lo usaron." Te tapas la boca con la mano.`))+loseSan('1d4',L('a verdade','the truth','la verdad'))}},
@@ -1706,7 +1707,6 @@ Tomas tu lanza y vas a la sala de entrenamiento. Tuninho y Maitê te siguen.`)),
   choices:()=>[{label:L('Encerrar a história','End the story','Terminar la historia'),main:true,run:()=>({end:true})}]}
 });
 }
-
 /* ================= ESTADO ================= */
 const SAVE_KEY='succedere-v1';
 let S=null;
@@ -1761,7 +1761,7 @@ async function showRoll(r){
     else if(r.crit&&r.ok){st.className='stamp crit';st.textContent=L('CRÍTICO','CRITICAL','CRÍTICO')}
     else{st.className='stamp '+(r.ok?'ok':'fail');st.textContent=r.ok?L('SUCESSO','SUCCESS','ÉXITO'):L('FALHA','FAILURE','FALLO')}
   }
-  await wait(reduced()?120:520);
+  await wait(reduced()?120:(r.enemy?900:750));
 }
 async function test(k,dt,o={}){
   const ak=o.attr||SKILLS[k];const a=S.attr[ak]??1;
@@ -2090,7 +2090,7 @@ function renderGame(){
   <h1 class="scene">${sc.title}</h1>
   ${S.outcome?`<div class="outcome ${S.outcomeCls||''}">${S.outcome}</div>`:''}
   <div class="story">${whispers(sc.text())}</div>
-  <div class="choices">${ch.map((c,i)=>c.input?`<div class="inputc"><input id="sc-in" class="field" placeholder="${c.input.placeholder}" autocomplete="off" autocapitalize="characters" maxlength="20" aria-label="${c.input.placeholder}"><button class="cta" data-a="choose" data-i="${i}" ${busy?'disabled':''}>${c.label}</button></div>`:`<button class="choice ${c.main?'main':''}" data-a="choose" data-i="${i}" ${busy||(c.test&&locked(c.test.sk))?'disabled':''}>
+  <div class="choices">${S.gate?`<button class="choice main" data-a="gate"><span class="t">${L('Continuar','Continue','Continuar')}</span></button>`:ch.map((c,i)=>c.input?`<div class="inputc"><input id="sc-in" class="field" placeholder="${c.input.placeholder}" autocomplete="off" autocapitalize="characters" maxlength="20" aria-label="${c.input.placeholder}"><button class="cta" data-a="choose" data-i="${i}" ${busy?'disabled':''}>${c.label}</button></div>`:`<button class="choice ${c.main?'main':''}" data-a="choose" data-i="${i}" ${busy||(c.test&&locked(c.test.sk))?'disabled':''}>
     <span class="t">${c.label}</span>${c.test?`<span class="tag">${testLabel(c.test.sk,c.test.dt,(typeof c.test.bonus==='function'?c.test.bonus():c.test.bonus)||0,c.test.ctx||[])}</span>`:''}</button>`).join('')}</div>
   ${S.cls==='especialista'&&anyTrained?`<label class="perito"><input type="checkbox" id="perito" ${S.peritoArmed?'checked':''} ${S.pe<2?'disabled':''}> ${L('Usar Perito no próximo teste treinado','Use Expert on the next trained roll','Usar Perito en la próxima tirada entrenada')} (2 ${L('PE','EP','PE')}, +${S.power?'1d8':'1d6'})</label>`:''}
   ${S.nextBonus?`<div class="perito" style="color:var(--conhec)">${L('Preparo ativo','Preparation active','Preparación activa')}: +${S.nextBonus}</div>`:''}`;
@@ -2111,6 +2111,10 @@ async function choose(i){
   busy=false;
   S.outcome=res.text||null;S.outcomeCls=cls;
   if(checkDown())return;
+  if(res.text&&(res.team||res.arsenal||res.end||res.combat||res.levelup)){const g=Object.assign({},res);delete g.text;S.gate=g;save();render();return}
+  await proceed(res);
+}
+async function proceed(res){
   if(res.team){S.screen='team';S.teamSel=[];save();render();window.scrollTo(0,0);return}
   if(res.arsenal){startArsenal(res.arsenal);return}
   if(res.end){S.screen='end';clearSave();render();window.scrollTo(0,0);return}
@@ -2123,9 +2127,8 @@ function checkDown(){
   if(S.pv<=0||S.san<=0){S.downReason=S.pv<=0?'pv':'san';S.screen='down';busy=false;render();window.scrollTo(0,0);return true}
   return false;
 }
-
 /* ---------- combate ---------- */
-function cline(t,cls=''){S.combat.lines.push({t,cls});if(S.combat.lines.length>10)S.combat.lines.shift();render()}
+function cline(t,cls=''){S.combat.lines.push({t,cls});if(S.combat.lines.length>14)S.combat.lines.shift();render()}
 const strip=h=>h.replace(/<[^>]+>/g,'').trim();
 function effDef(){const C=S.combat;return C.e.def-(C.cond.bloq>0?2:0)}
 function ammoPack(type){return S.inv.find(i=>i.id===type&&i.cenas>0)}
@@ -2229,10 +2232,10 @@ function renderCombat(){
   ${C.allies.length?`<div class="allies">${L('Ao seu lado','At your side','A tu lado')}: ${C.allies.map(a=>`<span>${ALLIES[a].name}</span>`).join('')}</div>`:''}
   <div class="round">${L('Registro da luta','Fight log','Registro de la pelea')}</div>
   <div class="clog">${C.lines.map(l=>`<p class="${l.cls}">${l.t}</p>`).join('')}</div>
-  <div class="wsel"><label for="c-equip">${L('Empunhando','Wielding','Empuñando')}</label><select id="c-equip" class="sel-s" ${dis}>${wl.map(x=>`<option value="${x.inst.uid}" ${x.inst.uid===w.inst.uid?'selected':''}>${x.it.name}${x.inst.mods.length?' ('+x.inst.mods.map(m=>MODS[m].name).join(', ')+')':''}</option>`).join('')}</select><small>${hasItem('bandoleira')?L('bandoleira: trocar é livre','bandolier: swapping is free','bandolera: cambiar es libre'):L('trocar gasta sua ação','swapping costs your action','cambiar gasta tu acción')}</small></div>
-  ${S.cls==='especialista'?`<label class="perito"><input type="checkbox" id="perito" ${S.peritoArmed?'checked':''} ${S.pe<2?'disabled':''}> ${CLASSES.especialista.power} (2 ${L('PE','EP','PE')}, +${S.power?'1d8':'1d6'})</label>`:''}
+  ${C.over?'':`<div class="wsel"><label for="c-equip">${L('Empunhando','Wielding','Empuñando')}</label><select id="c-equip" class="sel-s" ${dis}>${wl.map(x=>`<option value="${x.inst.uid}" ${x.inst.uid===w.inst.uid?'selected':''}>${x.it.name}${x.inst.mods.length?' ('+x.inst.mods.map(m=>MODS[m].name).join(', ')+')':''}</option>`).join('')}</select><small>${hasItem('bandoleira')?L('bandoleira: trocar é livre','bandolier: swapping is free','bandolera: cambiar es libre'):L('trocar gasta sua ação','swapping costs your action','cambiar gasta tu acción')}</small></div>`}
+  ${S.cls==='especialista'&&!C.over?`<label class="perito"><input type="checkbox" id="perito" ${S.peritoArmed?'checked':''} ${S.pe<2?'disabled':''}> ${CLASSES.especialista.power} (2 ${L('PE','EP','PE')}, +${S.power?'1d8':'1d6'})</label>`:''}
   ${S.nextBonus?`<div class="perito" style="color:var(--conhec)">${L('Preparo ativo','Preparation active','Preparación activa')}: +${S.nextBonus}</div>`:''}
-  <div class="actions">${acts.join('')}</div>`;
+  <div class="actions">${C.over?`<button class="abtn sp" data-a="c-over" style="grid-column:1/-1"><b>${L('Continuar','Continue','Continuar')} →</b><small>${C.over.down?L('a luta acabou para você','the fight is over for you','la pelea terminó para ti'):L('a luta acabou','the fight is over','la pelea terminó')}</small></button>`:acts.join('')}</div>`;
 }
 async function enemyResist(label,dt){
   const e=S.combat.e;const x=d(20),tot=x+e.res,res=tot>=dt;
@@ -2411,9 +2414,15 @@ async function enemyTurn(){
   tick();
 }
 function winCombat(custom){
-  const C=S.combat;const after=C.after;
+  const C=S.combat;
   let txt=custom||C.winText||L('O inimigo cai.','The enemy falls.','El enemigo cae.');
   if(C.ko&&!custom)txt=L('O inimigo está fora de combate.','The enemy is out of the fight.','El enemigo está fuera de combate.');
+  C.over={txt};busy=false;cline(strip(txt),'good');save();render();
+}
+function leaveCombat(){
+  const C=S.combat;if(!C||!C.over)return;
+  if(C.over.down){S.combat=null;checkDown();return}
+  const after=C.after,txt=C.over.txt;
   S.combat=null;S.treatReady=true;
   S.screen='game';S.scene=after;S.outcome=`<p>${txt}</p>`;S.outcomeCls='ok';
   if(SCENES[after]&&SCENES[after].checkpoint)setCheckpoint();
@@ -2422,7 +2431,7 @@ function winCombat(custom){
 async function combatEnd(dead){
   const C=S.combat;if(!C)return true;
   if(C.noDeath&&S.pv<=0){S.pv=1;const r=SCRIPTS[C.script].end(C,'down');busy=false;winCombat(r);return true}
-  if(checkDown())return true;
+  if(S.pv<=0||S.san<=0){C.over={down:true};busy=false;cline(S.pv<=0?L('Você cai.','You fall.','Caes.'):L('Sua mente se parte.','Your mind breaks.','Tu mente se quiebra.'),'hit');save();render();return true}
   if(dead||C.ko||C.e.pv<=0){busy=false;const r=C.script&&SCRIPTS[C.script].end?SCRIPTS[C.script].end(C,'win'):null;winCombat(r||undefined);return true}
   if(C.script&&SCRIPTS[C.script].check){const r=SCRIPTS[C.script].check(C);if(r){busy=false;winCombat(r);return true}}
   return false;
@@ -2454,7 +2463,6 @@ const SCRIPTS={
     end:(C,why)=>C.finalDone?L('A explosão de Lodo te joga longe. Antes de apagar, você vê o céu pela claraboia quebrada. Acabou. Ele está livre.','The Sludge explosion throws you across the room. Before you black out, you see the sky through the broken skylight. It\'s over. He\'s free.','La explosión de Lodo te lanza lejos. Antes de desmayarte, ves el cielo por el tragaluz roto. Se terminó. Él es libre.'):L('A Besta desaba. Mas o golpe que acabou com ela não foi o seu. Você corre até o centro do Lodo e encontra só o que sobrou dele.','The Beast collapses. But the blow that ended it wasn\'t yours. You run to the center of the Sludge and find only what\'s left of him.','La Bestia se derrumba. Pero el golpe que la terminó no fue el tuyo. Corres al centro del Lodo y encuentras solo lo que queda de él.')
   }
 };
-
 /* ---------- queda ---------- */
 function renderDown(){
   const pv=S.downReason==='pv';
@@ -2575,6 +2583,8 @@ document.addEventListener('click',async ev=>{
     case 'g-suggest':D.inv=suggestInv(D.cls);render();break;
     case 'g-clear':D.inv=[];render();break;
     case 'choose':choose(+b.dataset.i);break;
+    case 'gate':{const g=S.gate;if(!g)break;S.gate=null;proceed(g);break}
+    case 'c-over':leaveCombat();break;
     case 'treat':treat();break;
     case 'equip':if(!busy){S.equip=id;save();render()}break;
     case 'use-out':{if(busy)return;const i=S.inv.find(x=>x.uid===id);if(!i)return;S.inv=S.inv.filter(x=>x!==i);const h=healPv(rollExpr('2d8+2').total);log(`${ITEMS.cicatrizante.name}: +${h}`);S.outcome=`<p class="gain">${ITEMS.cicatrizante.name}: +${h} ${PV()}.</p>`;S.outcomeCls='ok';save();render();break}
@@ -2594,7 +2604,7 @@ document.addEventListener('click',async ev=>{
     case 'lv-sub':S.lvl.sub=id;render();break;
     case 'lv-ok':{const Lv=S.lvl;if(Lv.opt==='skill')S.trained.push(Lv.sub);if(Lv.opt==='rit')S.rituals.push(Lv.sub);if(Lv.opt==='power')S.power++;Lv.stage='rest';save();render();window.scrollTo(0,0);break}
     case 'rest':restChoice(id);break;
-    case 'retry':{const cp=S.checkpoint;S=clone(cp);S.checkpoint=cp;busy=false;S.screen='game';S.outcome=null;save();render();window.scrollTo(0,0);break}
+    case 'retry':{const cp=S.checkpoint;S=clone(cp);S.checkpoint=cp;busy=false;S.gate=null;S.screen='game';S.outcome=null;save();render();window.scrollTo(0,0);break}
   }
 });
 document.addEventListener('toggle',ev=>{const t=ev.target;if(t.classList&&t.classList.contains('cg')){D.openG=D.openG||{};D.openG[t.dataset.g]=t.open}},true);
