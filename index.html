@@ -381,7 +381,7 @@ let ATTR_INFO,EL_NAME,ORIGINS,CLASSES,RITUALS,ITEMS,MODS,ENEMIES,ALLIES,TEAM,GUI
 function buildData(){
   ATTR_INFO={
     AGI:[L('Agilidade','Agility','Agilidad'),L('Coordenação e reflexos. Dados em Pontaria, Furtividade, Reflexos, Iniciativa. Soma na Defesa.','Coordination and reflexes. Dice for Marksmanship, Stealth, Reflexes, Initiative. Adds to Defense.','Coordinación y reflejos. Dados en Puntería, Sigilo, Reflejos, Iniciativa. Suma a la Defensa.')],
-    FOR:[L('Força','Strength','Fuerza'),L('Potência física. Dados em Luta e Atletismo. Soma no dano corpo a corpo e na carga.','Physical power. Dice for Fighting and Athletics. Adds to melee damage and carrying capacity.','Potencia física. Dados en Lucha y Atletismo. Suma al daño cuerpo a cuerpo y a la carga.')],
+    FOR:[L('Força','Strength','Fuerza'),L('Potência física. Dados em Luta e Atletismo. Soma no dano corpo a corpo.','Physical power. Dice for Fighting and Athletics. Adds to melee damage.','Potencia física. Dados en Lucha y Atletismo. Suma al daño cuerpo a cuerpo.')],
     INT:[L('Intelecto','Intellect','Intelecto'),L('Raciocínio. Dados em Investigação, Ocultismo, Tecnologia, Medicina. +1 perícia treinada por ponto.','Reasoning. Dice for Investigation, Occultism, Technology, Medicine. +1 trained skill per point.','Razonamiento. Dados en Investigación, Ocultismo, Tecnología, Medicina. +1 pericia entrenada por punto.')],
     PRE:[L('Presença','Presence','Presencia'),L('Vontade e sentidos. Dados em Percepção, Vontade, Diplomacia... Soma nos PE.','Willpower and senses. Dice for Perception, Will, Diplomacy... Adds to EP.','Voluntad y sentidos. Dados en Percepción, Voluntad, Diplomacia... Suma a los PE.')],
     VIG:[L('Vigor','Vigor','Vigor'),L('Saúde e resistência. Dados em Fortitude. Soma nos PV a cada NEX.','Health and endurance. Dice for Fortitude. Adds to HP at every NEX.','Salud y resistencia. Dados en Fortaleza. Suma a los PV en cada NEX.')]
@@ -504,7 +504,7 @@ function buildItems(){
     sobrev:O('op',{name:L('Equipamento de sobrevivência','Survival gear','Equipo de supervivencia'),kind:'op',cat:0,sp:2,desc:L('+5 em Sobrevivência.','+5 Survival.','+5 en Supervivencia.')}),
     lanterna:O('op',{name:L('Lanterna tática','Tactical flashlight','Linterna táctica'),kind:'op',cat:1,sp:1,desc:L('+2 em Percepção no escuro. 1× por combate, ofusca o alvo sem gastar sua ação.','+2 Perception in the dark. Once per combat, dazzles the target without using your action.','+2 en Percepción a oscuras. 1× por combate, deslumbra al objetivo sin gastar tu acción.')}),
     mascara:O('op',{name:L('Máscara de gás','Gas mask','Máscara de gas'),kind:'op',cat:0,sp:1,desc:L('+10 em Fortitude contra efeitos de respiração.','+10 Fortitude against breathing effects.','+10 en Fortaleza contra efectos respiratorios.')}),
-    mochila:O('op',{name:L('Mochila militar','Military backpack','Mochila militar'),kind:'op',cat:1,sp:0,desc:L('Não ocupa espaço e aumenta sua capacidade em +2 (máximo 15).','Takes no space and increases capacity by +2 (max 15).','No ocupa espacio y aumenta tu capacidad en +2 (máximo 15).')}),
+    mochila:O('op',{name:L('Mochila militar','Military backpack','Mochila militar'),kind:'op',cat:1,sp:0,desc:L('Não ocupa espaço. Bolsos extras e alças reforçadas: nada chacoalha quando você corre.','Takes no space. Extra pockets and reinforced straps: nothing rattles when you run.','No ocupa espacio. Bolsillos extra y correas reforzadas: nada se sacude cuando corres.')}),
     termico:O('op',{name:L('Óculos de visão térmica','Thermal goggles','Gafas térmicas'),kind:'op',cat:1,sp:1,desc:L('Elimina a penalidade de camuflagem.','Removes the concealment penalty.','Elimina la penalización por camuflaje.')}),
     pecabra:O('op',{name:L('Pé de cabra','Crowbar','Palanca'),kind:'op',cat:0,sp:1,dmg:'1d6',dmg2:'1d8',crit:[20,2],tipo:T.I,grip:'uma',prof:'simples',alc:'—',desc:L('+5 em testes de Força para arrombar portas. Também serve como bastão.','+5 to Strength rolls to force doors. Also works as a club.','+5 en tiradas de Fuerza para forzar puertas. También sirve como bastón.')}),
     dardos:O('op',{name:L('Pistola de dardos','Dart gun','Pistola de dardos'),kind:'op',cat:1,sp:1,charges:2,desc:L('Humano atingido fica inconsciente (Fortitude reduz). 2 dardos.','A human hit falls unconscious (Fortitude reduces). 2 darts.','El humano alcanzado queda inconsciente (Fortaleza reduce). 2 dardos.')}),
@@ -555,7 +555,7 @@ function newInst(id){const it=ITEMS[id];return {uid:Math.random().toString(36).s
 function itemCat(i){return ITEMS[i.id].cat+i.mods.length}
 function itemSp(i){const it=ITEMS[i.id];if(!it.sp)return 0;return Math.max(0,it.sp-(i.mods.some(m=>DISCRETE.includes(m))?1:0)+(i.mods.includes('blindada')?1:0)+(i.mods.includes('reforcada')?1:0))}
 function spacesUsed(inv){return inv.reduce((s,i)=>s+itemSp(i),0)}
-function capacity(FOR,inv){return Math.min(15,(FOR>0?5*FOR:2)+(inv.some(i=>i.id==='mochila')?2:0))}
+function capacity(FOR,inv){return 15}
 const scenesWord=n=>n>1?L('cenas','scenes','escenas'):L('cena','scene','escena');
 function itemStats(it,i){
   if(it.dmg)return `${it.dmg}${it.dmg2?'/'+it.dmg2:''} · ${critStr(it.crit)} · ${it.alc||'—'} · ${it.tipo||''}`;
@@ -577,7 +577,7 @@ function armorInfo(inv,cls,grip){
 }
 const hasItem=id=>!!(S&&S.inv)&&S.inv.some(i=>i.id===id);
 function removeItem(id){const k=S.inv.findIndex(i=>i.id===id);if(k>=0)S.inv.splice(k,1)}
-function weaponList(){return [...S.inv.filter(i=>ITEMS[i.id].dmg).map(i=>({inst:i,it:ITEMS[i.id]})),{inst:{uid:'_desarmado',id:'_desarmado',mods:[]},it:UNARMED}]}
+function weaponList(){const drop=(S.combat&&S.combat.dropped)||[];return [...S.inv.filter(i=>ITEMS[i.id].dmg&&!drop.includes(i.uid)).map(i=>({inst:i,it:ITEMS[i.id]})),{inst:{uid:'_desarmado',id:'_desarmado',mods:[]},it:UNARMED}]}
 function equipped(){const l=weaponList();return l.find(w=>w.inst.uid===S.equip)||l[0]}
 function curArmor(){return armorInfo(S.inv,S.cls,equipped().it.grip)}
 function wStats(w,mode='normal'){
@@ -694,7 +694,8 @@ function buildStoryData(){
     frasco:c(L('O frasco','The vial','El frasco'),L('O frasco que transformou Luck tem a etiqueta do almoxarifado da Base. Alguém lá de dentro roubou e entregou.','The vial that transformed Luck carries a label from the Base\'s supply room. Someone inside stole it and handed it over.','El frasco que transformó a Luck tiene la etiqueta del almacén de la Base. Alguien de adentro lo robó y lo entregó.')),
     endereco:c(L('Endereço no celular de Aline','Address on Aline\'s phone','Dirección en el celular de Aline'),L('Um único endereço salvo como "casa": uma fábrica abandonada na zona industrial.','A single address saved as "home": an abandoned factory in the industrial district.','Una sola dirección guardada como "casa": una fábrica abandonada en la zona industrial.')),
     ficha_ataque:c(L('Ficha do ataque','The attack file','Ficha del ataque'),L('Uma ficha datada de antes da tragédia: plantas da Mansão Wezen, horários da família, rotas de fuga. O ataque foi planejado.','A file dated before the tragedy: floor plans of the Wezen Mansion, the family\'s schedules, escape routes. The attack was planned.','Una ficha fechada antes de la tragedia: planos de la Mansión Wezen, horarios de la familia, rutas de escape. El ataque fue planeado.')),
-    frederick:c(L('Os documentos de Frederick','Frederick\'s documents','Los documentos de Frederick'),L('Seu pai comprou o hospital, contratou Aline e mandou dois pacientes para o subterrâneo: Lukas e Felipe, 17 anos. Tentava dar vida ao Deus da Morte.','Your father bought the hospital, hired Aline and sent two patients underground: Lukas and Felipe, 17. He was trying to bring the God of Death to life.','Tu padre compró el hospital, contrató a Aline y mandó a dos pacientes al subterráneo: Lukas y Felipe, 17 años. Intentaba darle vida al Dios de la Muerte.')),
+    pacientes:c(L('Fichas de Lukas e Felipe','Lukas and Felipe\'s files','Fichas de Lukas y Felipe'),L('Dois pacientes de 17 anos, estudantes, enviados ao subterrâneo do hospital por ordem de Frederick Wezen. Você e Derick suspeitam que sejam Luck e Formiga.','Two 17-year-old patients, students, sent to the hospital underground by order of Frederick Wezen. You and Derick suspect they are Luck and Formiga.','Dos pacientes de 17 años, estudiantes, enviados al subterráneo del hospital por orden de Frederick Wezen. Tú y Derick sospechan que son Luck y Formiga.')),
+    frederick:c(L('Os documentos de Frederick','Frederick\'s documents','Los documentos de Frederick'),L('Seu pai comprou o hospital e contratou Aline para conduzir os estudos. Uma foto dos dois juntos, ela ainda sem cicatrizes.','Your father bought the hospital and hired Aline to run the studies. A photo of the two of them together, before her scars.','Tu padre compró el hospital y contrató a Aline para dirigir los estudios. Una foto de los dos juntos, ella todavía sin cicatrices.')),
     verdade:c(L('A confissão de Felipe','Felipe\'s confession','La confesión de Felipe'),L('Formiga e Luck foram cobaias do seu pai. Aline os libertou. O ataque à mansão foi vingança. Anos depois, Eros os procurou para trazer você de volta, e eles o usaram.','Formiga and Luck were your father\'s test subjects. Aline set them free. The attack on the mansion was revenge. Years later, Eros came to them to bring you back, and they used him.','Formiga y Luck fueron cobayas de tu padre. Aline los liberó. El ataque a la mansión fue venganza. Años después, Eros los buscó para traerte de vuelta, y lo usaron.'))
   };
 }
@@ -739,7 +740,7 @@ RADIO:TELÉFONO · JUDITE|"¿Eros Wezen? Sí. Agente en actividad." Un silencio 
     {once:'judite',label:L('Pressionar Judite por mais informações','Press Judite for more','Presionar a Judite por más información'),test:{sk:'Diplomacia',dt:13},
       ok:()=>({text:P(L(`"Ele não fala de família. Só uma vez, bêbado, falou de uma irmã que morreu por culpa dele." Ela anota seu nome. "Venha até o bar. Rua da Alfândega, 212. Sozinha."`,`"He doesn't talk about family. Only once, drunk, he mentioned a sister who died because of him." She writes down your name. "Come to the bar. 212 Alfândega Street. Alone."`,`"No habla de su familia. Solo una vez, borracho, habló de una hermana que murió por su culpa." Anota tu nombre. "Ven al bar. Calle de la Aduana, 212. Sola."`))+addClue('eros_vivo')}),
       fail:()=>({text:P(L(`"Isso não é assunto para telefone." Ela te dá um endereço, Rua da Alfândega, 212, e desliga.`,`"This isn't a phone conversation." She gives you an address, 212 Alfândega Street, and hangs up.`,`"Esto no se habla por teléfono." Te da una dirección, Calle de la Aduana, 212, y cuelga.`))+addClue('eros_vivo')})},
-    {label:L('Ir até o endereço agora','Go to the address now','Ir a la dirección ahora'),main:true,run:()=>{addClue('eros_vivo');return {go:'c1_bar'}}}
+    {label:L('Ir até o endereço agora','Go to the address now','Ir a la dirección ahora'),main:true,cond:()=>!!S.done.judite,run:()=>{addClue('eros_vivo');return {go:'c1_bar'}}}
   ]},
 
 c1_bar:{act:CH1,title:L('O bar','The bar','El bar'),
@@ -847,15 +848,9 @@ h1_necro:{act:CH2,title:L('Necrotério','Morgue','Morgue'),
   choices:()=>[{label:L('Voltar ao corredor','Back to the hallway','Volver al pasillo'),main:true,run:()=>({go:'h1_hall',text:loseSan('1d2',L('o necrotério','the morgue','la morgue'))})}]},
 
 h1_escritorio:{act:CH2,title:L('O escritório do médico','The physician\'s office','El despacho del médico'),
-  text:()=>P(L(`A sala é estreita. Só dá para entrar em fila. Você vai no meio, como Derick ensinou. ${teamNames().join(', ')}: alguém vai ter que entrar por último e fechar a retaguarda.
-
-Um aviso que você só vai entender tarde demais: o que vive nesta sala sempre escolhe o último a entrar.`,
-`The room is narrow. You can only go in single file. You take the middle, like Derick taught you. ${teamNames().join(', ')}: someone has to go in last and cover the rear.
-
-A warning you'll only understand too late: whatever lives in this room always chooses the last one in.`,
-`La sala es estrecha. Solo se puede entrar en fila. Tú vas en el medio, como enseñó Derick. ${teamNames().join(', ')}: alguien tiene que entrar último y cubrir la retaguardia.
-
-Una advertencia que solo entenderás demasiado tarde: lo que vive en esta sala siempre elige al último en entrar.`)),
+  text:()=>P(L(`A sala é estreita. Só dá para entrar em fila. Você vai no meio, como Derick ensinou. ${teamNames().join(', ')}: alguém vai ter que entrar por último e fechar a retaguarda.`,
+`The room is narrow. You can only go in single file. You take the middle, like Derick taught you. ${teamNames().join(', ')}: someone has to go in last and cover the rear.`,
+`La sala es estrecha. Solo se puede entrar en fila. Tú vas en el medio, como enseñó Derick. ${teamNames().join(', ')}: alguien tiene que entrar último y cubrir la retaguardia.`)),
   choices:()=>S.team.map(id=>({label:L(`${TEAM[id].name} entra por último`,`${TEAM[id].name} goes in last`,`${TEAM[id].name} entra último`),run:()=>{S.host=id;return {go:'h1_sonho'}}}))},
 
 h1_sonho:{act:CH2,title:L('O sonho compartilhado','The shared dream','El sueño compartido'),
@@ -1075,59 +1070,107 @@ Ryan patea una silla. "Entonces acabamos con ellos primero. Y con Eros." Todos t
   ]},
 
 b5_alarme:{act:CH3,title:L('Alarme','Alarm','Alarma'),
-  text:()=>P(L(`No segundo em que Roger Jr termina a frase, as luzes ficam vermelhas e a sirene da Base dispara. Todo mundo corre para um lado.
+  text:()=>P(L(`No segundo em que Roger Jr termina a frase, as luzes ficam vermelhas e a sirene da Base dispara. Alguém ativou o sensor da entrada de cima, a passagem escondida atrás do bar da Judite.
 
-Dez minutos de busca. Nada. Nenhuma porta arrombada, nenhuma câmera com imagem.
+Roger grita as ordens: Equipe Thomas no arsenal, Equipe Bob na entrada, Equipe Mada nos corredores. Todo mundo corre para longe da ala da prisão.
 
-Quando se reúnem de novo, Derick fica pálido. "A Aline."`,
-`The second Roger Jr finishes his sentence, the lights turn red and the Base siren goes off. Everyone runs in a different direction.
+Dez minutos de busca. Nada. Nenhuma porta arrombada, ninguém estranho. As câmeras dos corredores mostram só três minutos de tela preta, bem na hora em que a sirene tocou.
 
-Ten minutes of searching. Nothing. No forced doors, no camera footage.
+Vocês se reúnem de novo na sala de reunião. Derick conta as pessoas, uma por uma. Então para, pálido. "Ninguém ficou vigiando a prisão."
 
-When you regroup, Derick goes pale. "Aline."`,
-`En el segundo en que Roger Jr termina la frase, las luces se ponen rojas y suena la sirena de la Base. Todos corren hacia un lado.
+"A Aline."`,
+`The second Roger Jr finishes his sentence, the lights turn red and the Base siren goes off. Someone tripped the sensor on the upper entrance, the hidden passage behind Judite's bar.
 
-Diez minutos de búsqueda. Nada. Ninguna puerta forzada, ninguna cámara con imagen.
+Roger shouts the orders: Team Thomas to the armory, Team Bob to the entrance, Team Mada to the corridors. Everyone runs away from the prison wing.
 
-Cuando se reúnen de nuevo, Derick se pone pálido. "Aline."`)),
+Ten minutes of searching. Nothing. No forced doors, no strangers. The corridor cameras show only three minutes of black screen, right when the siren went off.
+
+You regroup in the meeting room. Derick counts heads, one by one. Then he stops, pale. "Nobody stayed to guard the prison."
+
+"Aline."`,
+`En el segundo en que Roger Jr termina la frase, las luces se ponen rojas y suena la sirena de la Base. Alguien activó el sensor de la entrada de arriba, el pasaje escondido detrás del bar de Judite.
+
+Roger grita las órdenes: Equipo Thomas al arsenal, Equipo Bob a la entrada, Equipo Mada a los pasillos. Todos corren lejos del ala de la prisión.
+
+Diez minutos de búsqueda. Nada. Ninguna puerta forzada, ningún desconocido. Las cámaras de los pasillos muestran solo tres minutos de pantalla negra, justo cuando sonó la sirena.
+
+Se reúnen de nuevo en la sala de reuniones. Derick cuenta a las personas, una por una. Entonces se detiene, pálido. "Nadie se quedó vigilando la prisión."
+
+"Aline."`)),
   choices:()=>[{label:L('Correr até a cela','Run to the cell','Correr a la celda'),main:true,run:()=>({go:'b6_cela'})}]},
 
 b6_cela:{act:CH3,title:L('Cela vazia','Empty cell','Celda vacía'),
-  text:()=>P(L(`A cela está vazia. As algemas estão abertas, não quebradas. Alguém tinha a chave.
+  text:()=>P(L(`A cela está vazia. As algemas estão abertas, não quebradas: alguém usou a chave. O alarme não foi um invasor. Foi uma distração, para tirar todo mundo de perto da prisão.
 
-Roger Jr sobe correndo até o bar, sozinho. Volta branco. "A Judite."
+"Alguém daqui de dentro", diz Mada, baixo. Ninguém responde.
 
-Ela está atrás do balcão, sentada, as mãos no colo. A pele toda cinza, como cimento. Os olhos abertos. Só ela abria a passagem por cima.`,
-`The cell is empty. The cuffs are open, not broken. Someone had the key.
+Só existe uma saída para a rua: a passagem atrás do bar, lá em cima, onde a Judite fica de guarda. Roger Jr se oferece e sobe correndo, sozinho, antes que alguém consiga ir junto. Volta branco. "A Judite."
 
-Roger Jr runs up to the bar, alone. He comes back white. "Judite."
+Vocês sobem atrás dele. Ela está atrás do balcão, sentada, as mãos no colo. A pele toda cinza, como cimento. Os olhos abertos. Ela era a única que via quem entrava e quem saía da Base.`,
+`The cell is empty. The cuffs are open, not broken: someone used the key. The alarm wasn't an intruder. It was a diversion, to pull everyone away from the prison.
 
-She's behind the counter, seated, hands in her lap. Her skin is completely grey, like cement. Eyes open. She was the only one who could open the passage from above.`,
-`La celda está vacía. Las esposas están abiertas, no rotas. Alguien tenía la llave.
+"Someone on the inside," Mada says quietly. Nobody answers.
 
-Roger Jr sube corriendo al bar, solo. Vuelve pálido. "Judite."
+There's only one way out to the street: the passage behind the bar, upstairs, where Judite keeps watch. Roger Jr volunteers and runs up alone, before anyone can go with him. He comes back white. "Judite."
 
-Está detrás del mostrador, sentada, con las manos en el regazo. La piel toda gris, como cemento. Los ojos abiertos. Solo ella abría el pasaje desde arriba.`)),
+You go up after him. She's behind the counter, seated, hands in her lap. Her skin is completely grey, like cement. Eyes open. She was the only one who saw who came into and out of the Base.`,
+`La celda está vacía. Las esposas están abiertas, no rotas: alguien usó la llave. La alarma no fue un intruso. Fue una distracción, para alejar a todos de la prisión.
+
+"Alguien de adentro", dice Mada, en voz baja. Nadie responde.
+
+Solo hay una salida a la calle: el pasaje detrás del bar, arriba, donde Judite hace guardia. Roger Jr se ofrece y sube corriendo, solo, antes de que alguien pueda ir con él. Vuelve pálido. "Judite."
+
+Suben detrás de él. Está detrás del mostrador, sentada, con las manos en el regazo. La piel toda gris, como cemento. Los ojos abiertos. Era la única que veía quién entraba y quién salía de la Base.`)),
   choices:()=>[
     {label:L('Olhar para o corpo','Look at the body','Mirar el cuerpo'),test:{sk:'Vontade',dt:14},
-      ok:()=>({text:P(L(`Você se obriga a olhar. Nenhum ferimento. Só símbolos pequenos, desenhados a unha na palma das mãos. Ritual.`,`You force yourself to look. No wounds. Just small symbols scratched into her palms. A ritual.`,`Te obligas a mirar. Ninguna herida. Solo símbolos pequeños, rasguñados en las palmas. Un ritual.`))+(S.susp.rjr?P(L(`E Roger Jr foi o único que subiu. Sozinho.`,`And Roger Jr was the only one who went up. Alone.`,`Y Roger Jr fue el único que subió. Solo.`)):''),go:'b7_divisao'}),
+      ok:()=>({text:P(L(`Você se obriga a olhar. Nenhum ferimento. Só símbolos pequenos, desenhados a unha na palma das mãos. Ritual. Mada olha os símbolos e diz um nome só: "Formiga."`,`You force yourself to look. No wounds. Just small symbols scratched into her palms. A ritual. Mada looks at the symbols and says a single name: "Formiga."`,`Te obligas a mirar. Ninguna herida. Solo símbolos pequeños, rasguñados en las palmas. Un ritual. Mada mira los símbolos y dice un solo nombre: "Formiga."`))+(S.susp.rjr?P(L(`E Roger Jr foi o único que subiu antes. Sozinho.`,`And Roger Jr was the only one who came up first. Alone.`,`Y Roger Jr fue el único que subió primero. Solo.`)):''),go:'b7_divisao'}),
       fail:()=>({text:P(L(`Você vira o rosto e vomita no chão do bar.`,`You turn away and throw up on the bar floor.`,`Apartas la cara y vomitas en el piso del bar.`))+loseSan('1d4','Judite'),go:'b7_divisao'})}
   ]},
 
 b7_divisao:{act:CH3,title:L('Três caminhos','Three paths','Tres caminos'),
-  text:()=>P(L(`Roger decide em trinta segundos. Equipe Thomas protege a Base. Equipe Bob volta ao hospital para investigar a outra saída do subsolo. E a Equipe Mada, com você, segue o rastreador que Derick escondeu na roupa de Aline durante o interrogatório.
+  text:()=>P(L(`De volta à sala de reunião, Roger resume o que todos já entenderam: Aline não fugiu sozinha. Alguém disparou o alarme, apagou as câmeras, abriu as algemas, levou ela pela saída do bar e matou a Judite para ninguém ver.
 
-O ponto no mapa para de se mexer. Derick amplia. Você reconhece a rua antes dele.
+Então Derick levanta a mão, meio sem jeito. Durante o interrogatório, ele costurou um rastreador na barra da calça da Aline. Mada autorizou. Não contaram para mais ninguém. Por isso quem soltou ela não achou.
+
+Roger decide em trinta segundos:
+
+Equipe Thomas fica e protege a Base.
+
+Equipe Bob volta ao hospital, para descobrir aonde leva a outra saída do subsolo.
+
+Equipe Mada, com você, segue o rastreador. Leon e Jon vão junto, de reforço.
+
+No tablet de Derick, o ponto para de se mexer. Ele amplia o mapa. Você reconhece a rua antes dele.
 
 "Isso é..." "A minha casa", você diz. "A Mansão Wezen."`,
-`Roger decides in thirty seconds. Team Thomas guards the Base. Team Bob goes back to the hospital to investigate the basement's other exit. And Team Mada, with you, follows the tracker Derick hid in Aline's clothes during the interrogation.
+`Back in the meeting room, Roger sums up what everyone already understands: Aline didn't escape on her own. Someone set off the alarm, killed the cameras, unlocked the cuffs, took her out through the bar and killed Judite so no one would see.
 
-The dot on the map stops moving. Derick zooms in. You recognize the street before he does.
+Then Derick raises his hand, a little awkwardly. During the interrogation, he sewed a tracker into the hem of Aline's pants. Mada approved it. They told no one else. That's why whoever freed her didn't find it.
+
+Roger decides in thirty seconds:
+
+Team Thomas stays and guards the Base.
+
+Team Bob goes back to the hospital to find out where the basement's other exit leads.
+
+Team Mada, with you, follows the tracker. Leon and Jon go along as backup.
+
+On Derick's tablet, the dot stops moving. He zooms in on the map. You recognize the street before he does.
 
 "That's..." "My house," you say. "The Wezen Mansion."`,
-`Roger decide en treinta segundos. El Equipo Thomas protege la Base. El Equipo Bob vuelve al hospital a investigar la otra salida del subsuelo. Y el Equipo Mada, contigo, sigue el rastreador que Derick escondió en la ropa de Aline durante el interrogatorio.
+`De vuelta en la sala de reuniones, Roger resume lo que todos ya entendieron: Aline no escapó sola. Alguien disparó la alarma, apagó las cámaras, abrió las esposas, la sacó por el bar y mató a Judite para que nadie la viera.
 
-El punto en el mapa deja de moverse. Derick amplía. Reconoces la calle antes que él.
+Entonces Derick levanta la mano, algo incómodo. Durante el interrogatorio, cosió un rastreador en el dobladillo del pantalón de Aline. Mada lo autorizó. No se lo dijeron a nadie más. Por eso quien la liberó no lo encontró.
+
+Roger decide en treinta segundos:
+
+El Equipo Thomas se queda y protege la Base.
+
+El Equipo Bob vuelve al hospital a descubrir adónde lleva la otra salida del subsuelo.
+
+El Equipo Mada, contigo, sigue el rastreador. Leon y Jon van también, de refuerzo.
+
+En la tablet de Derick, el punto deja de moverse. Amplía el mapa. Reconoces la calle antes que él.
 
 "Eso es..." "Mi casa", dices. "La Mansión Wezen."`)),
   choices:()=>[{label:L('Partir com Mada, Derick, Leon e Jon','Leave with Mada, Derick, Leon and Jon','Partir con Mada, Derick, Leon y Jon'),main:true,run:()=>({go:'m1_vigia'})}]}
@@ -1538,11 +1581,43 @@ Del otro lado de la fábrica, disparos de fusil. Ráfagas largas, disciplinadas.
   ]},
 
 a7_docs:{act:CH7,title:L('O subsolo','The sub-basement','El subsuelo'),
-  text:()=>P(L(`O tubo desce até um subsolo com mesas de metal e arquivos de aço. Papéis por toda parte.`,`The tube runs down into a sub-basement with metal tables and steel filing cabinets. Papers everywhere.`,`El tubo baja hasta un subsuelo con mesas de metal y archivadores de acero. Papeles por todas partes.`)),
+  text:()=>P(L(`O tubo desce até um subsolo com mesas de metal e arquivos de aço. Papéis por toda parte. Derick força uma gaveta com uma etiqueta amarelada: "PACIENTES · SUBTERRÂNEO".
+
+Duas fichas estão por cima, presas com o mesmo clipe enferrujado.
+
+PACIENTE: LUKAS. 17 anos. Estudante, 3º ano do ensino médio. Encaminhado ao subterrâneo por ordem de F. Wezen.
+
+PACIENTE: FELIPE. 17 anos. Estudante, 3º ano do ensino médio. Encaminhado ao subterrâneo por ordem de F. Wezen.
+
+Embaixo das duas, a mesma assinatura. Você conhece essa letra. É a mesma da legenda da foto do Skart.
+
+"Lukas", Derick lê em voz alta. "Luck." Ele vira a outra ficha. "Felipe..." Nenhum dos dois termina a frase. Não dá para ter certeza. Mas também não dá para não pensar.`,
+`The tube runs down into a sub-basement with metal tables and steel filing cabinets. Papers everywhere. Derick forces open a drawer with a yellowed label: "PATIENTS · UNDERGROUND".
+
+Two files sit on top, held together by the same rusty paper clip.
+
+PATIENT: LUKAS. 17 years old. Student, final year of high school. Sent to the underground by order of F. Wezen.
+
+PATIENT: FELIPE. 17 years old. Student, final year of high school. Sent to the underground by order of F. Wezen.
+
+Beneath both, the same signature. You know that handwriting. It's the same as the caption on the photo of Skart.
+
+"Lukas," Derick reads aloud. "Luck." He turns the other file over. "Felipe..." Neither of you finishes the sentence. There's no way to be sure. But there's no way not to think it, either.`,
+`El tubo baja hasta un subsuelo con mesas de metal y archivadores de acero. Papeles por todas partes. Derick fuerza un cajón con una etiqueta amarillenta: "PACIENTES · SUBTERRÁNEO".
+
+Dos fichas están encima, sujetas con el mismo clip oxidado.
+
+PACIENTE: LUKAS. 17 años. Estudiante, último año de secundaria. Enviado al subterráneo por orden de F. Wezen.
+
+PACIENTE: FELIPE. 17 años. Estudiante, último año de secundaria. Enviado al subterráneo por orden de F. Wezen.
+
+Debajo de las dos, la misma firma. Conoces esa letra. Es la misma de la leyenda de la foto de Skart.
+
+"Lukas", lee Derick en voz alta. "Luck." Da vuelta la otra ficha. "Felipe..." Ninguno de los dos termina la frase. No hay forma de estar seguros. Pero tampoco hay forma de no pensarlo.`))+addClue('pacientes'),
   choices:()=>[
-    {once:'docs',label:L('Ler os documentos com calma','Read the documents carefully','Leer los documentos con calma'),test:{sk:'Investigação',dt:14},
-      ok:()=>({text:P(L(`Você lê tudo. E cada folha tira um pedaço do chão debaixo dos seus pés. No fundo da pasta, uma foto: seu pai, sorridente, ao lado de uma Aline jovem, sem nenhuma cicatriz.`,`You read everything. And every page pulls another piece of ground out from under your feet. At the bottom of the folder, a photo: your father, smiling, next to a young Aline without a single scar.`,`Lo lees todo. Y cada hoja te quita un pedazo de suelo bajo los pies. Al fondo de la carpeta, una foto: tu padre, sonriente, junto a una Aline joven, sin ninguna cicatriz.`))+addClue('ficha_ataque')+addClue('frederick')+loseSan('1d4',L('seu pai','your father','tu padre'))}),
-      fail:()=>({text:P(L(`Você só consegue ler a primeira ficha antes de Derick apontar a escada.`,`You only manage to read the first file before Derick points at the stairs.`,`Solo alcanzas a leer la primera ficha antes de que Derick señale la escalera.`))+addClue('ficha_ataque')})},
+    {once:'docs',label:L('Ler o resto dos documentos com calma','Read the rest of the documents carefully','Leer el resto de los documentos con calma'),test:{sk:'Investigação',dt:14},
+      ok:()=>({text:P(L(`Você lê tudo. E cada folha tira um pedaço do chão debaixo dos seus pés. Uma ficha antiga, com a planta da Mansão Wezen e os horários da sua família: alguém estudava um ataque à sua casa muito antes daquela noite. Uma escritura: o hospital foi comprado por Frederick Wezen. Por isso o túnel liga os dois lugares. Um contrato: Aline, contratada pelo próprio Frederick para "conduzir os estudos". No fundo da pasta, uma foto: seu pai, sorridente, ao lado de uma Aline jovem, sem nenhuma cicatriz.`,`You read everything. And every page pulls another piece of ground out from under your feet. An old file with the floor plan of the Wezen Mansion and your family's schedules: someone was studying an attack on your home long before that night. A deed: the hospital was bought by Frederick Wezen. That's why the tunnel links the two places. A contract: Aline, hired by Frederick himself to "run the studies". At the bottom of the folder, a photo: your father, smiling, next to a young Aline without a single scar.`,`Lo lees todo. Y cada hoja te quita un pedazo de suelo bajo los pies. Una ficha vieja, con el plano de la Mansión Wezen y los horarios de tu familia: alguien estudiaba un ataque a tu casa mucho antes de aquella noche. Una escritura: el hospital lo compró Frederick Wezen. Por eso el túnel une los dos lugares. Un contrato: Aline, contratada por el propio Frederick para "dirigir los estudios". Al fondo de la carpeta, una foto: tu padre, sonriente, junto a una Aline joven, sin ninguna cicatriz.`))+addClue('ficha_ataque')+addClue('frederick')+loseSan('1d4',L('seu pai','your father','tu padre'))}),
+      fail:()=>({text:P(L(`Você só consegue ler mais uma ficha, com a planta da Mansão Wezen e os horários da sua família, antes de Derick apontar a escada.`,`You only manage to read one more file, with the floor plan of the Wezen Mansion and your family's schedules, before Derick points at the stairs.`,`Solo alcanzas a leer una ficha más, con el plano de la Mansión Wezen y los horarios de tu familia, antes de que Derick señale la escalera.`))+addClue('ficha_ataque')})},
     {label:L('Descer mais','Go further down','Bajar más'),main:true,run:()=>({go:'a7_porta'})}
   ]},
 
@@ -1573,10 +1648,55 @@ Formiga maneja un panel junto a ella. Delante de él, una criatura flaca de Lodo
 
 Formiga te ve. Y sonríe.`)),
   choices:()=>[
-    {label:L('Chamá-lo pelo nome verdadeiro','Call him by his real name','Llamarlo por su nombre verdadero'),cond:()=>has('frederick'),
-      run:()=>({text:P(L(`"Felipe." Ele congela. Ninguém o chama assim há anos. E então ele conta. Tudo. Os experimentos do seu pai. O Deus da Morte. Aline, contratada para conduzir tudo, que não aguentou e os libertou. O ataque à mansão, disfarçado de coisa paranormal. "Eu queria que ele sobrevivesse. Pra ver." E o Eros, anos depois, batendo na porta deles pedindo ajuda para trazer você de volta. "Foi fácil demais."`,`"Felipe." He freezes. No one has called him that in years. And then he tells you. Everything. Your father's experiments. The God of Death. Aline, hired to run it all, who couldn't stand it and set them free. The attack on the mansion, dressed up as something paranormal. "I wanted him to survive. To watch." And Eros, years later, knocking on their door asking for help to bring you back. "It was too easy."`,`"Felipe." Se congela. Nadie lo llama así desde hace años. Y entonces lo cuenta. Todo. Los experimentos de tu padre. El Dios de la Muerte. Aline, contratada para dirigirlo todo, que no aguantó y los liberó. El ataque a la mansión, disfrazado de algo paranormal. "Quería que él sobreviviera. Para que lo viera." Y Eros, años después, golpeando su puerta para pedir ayuda para traerte de vuelta. "Fue demasiado fácil."`))+addClue('verdade')+loseSan('1d4',L('a verdade','the truth','la verdad')),go:'a7_carnicais'})},
+    {label:L('Chamá-lo pelo nome verdadeiro','Call him by his real name','Llamarlo por su nombre verdadero'),cond:()=>has('pacientes'),
+      run:()=>({text:P(L(`"Felipe." Ele congela. Ninguém o chama assim há anos. "Então você achou as fichas", ele diz, quase aliviado. "Tudo bem. Alguém tinha que saber."`,`"Felipe." He freezes. No one has called him that in years. "So you found the files," he says, almost relieved. "Fine. Someone had to know."`,`"Felipe." Se congela. Nadie lo llama así desde hace años. "Así que encontraste las fichas", dice, casi aliviado. "Está bien. Alguien tenía que saberlo."`)),go:'a7_confissao'})},
     {label:L('"Solta o meu irmão, Formiga"','"Let my brother go, Formiga"','"Suelta a mi hermano, Formiga"'),
-      run:()=>({text:P(L(`Ele ri. "Seu pai começou isso. Eu só estou terminando." Ele não explica mais nada.`,`He laughs. "Your father started this. I'm just finishing it." He doesn't explain anything else.`,`Se ríe. "Tu padre empezó esto. Yo solo lo estoy terminando." No explica nada más.`)),go:'a7_carnicais'})}
+      run:()=>({text:P(L(`Ele ri. "Seu irmão? Seu pai começou isso tudo. Quer saber como?"`,`He laughs. "Your brother? Your father started all of this. Want to know how?"`,`Se ríe. "¿Tu hermano? Tu padre empezó todo esto. ¿Quieres saber cómo?"`)),go:'a7_confissao'})}
+  ]},
+
+a7_confissao:{act:CH7,title:L('A confissão','The confession','La confesión'),
+  text:()=>P(L(`Formiga não para de mexer no painel enquanto fala. Fala como quem já ensaiou isso muitas vezes, sozinho.
+
+"Eu e o Lukas tínhamos dezessete anos. Terceiro ano. A gente vivia atrás do paranormal: fórum, livro velho, cemitério de madrugada. Aí apareceu um homem rico, educado, de terno, dizendo que estudava o Outro Lado e que queria estudar junto com a gente. Seu pai."
+
+"Ele comprou aquele hospital. Montou o subterrâneo. E a gente descobriu rápido que não era aluno. Era cobaia. Ele queria dar vida ao Deus da Morte, e para isso precisava de gente viva. Duas fichas de paciente. Foi isso que a gente virou."
+
+"A Aline foi contratada para conduzir os experimentos. Ela odiava o que via. Quando percebeu que o seu pai ia desistir do projeto e deixar a gente lá embaixo para sempre, ela abriu as portas. Soltou a gente. E ficou com a gente."
+
+"Continuamos os estudos sozinhos, no mesmo hospital. E planejamos a mansão. Fizemos parecer que era só o paranormal: a coisa de oito patas, o Sangue, tudo. Ninguém nunca procurou gente." Ele encolhe os ombros. "Eu queria que ele sobrevivesse. Para ver o que tinha perdido. Mas ele morreu. Só sobraram você e o seu irmão."
+
+"E aí, anos depois, quem bate na nossa porta? Eros Wezen. Pedindo ajuda para trazer de volta a irmã morta. Chorando. Oferecendo qualquer coisa. Ele nunca soube de nada. Fez tudo o que a gente pediu. Entrou na Ordem, traiu a própria equipe." Ele sorri. "Foi fácil demais."
+
+Ele finalmente olha para a cápsula. "Seu pai começou isso. Eu só estou terminando."`,
+`Formiga keeps working the panel as he talks. He talks like someone who has rehearsed this many times, alone.
+
+"Lukas and I were seventeen. Final year of high school. We lived for the paranormal: forums, old books, cemeteries at dawn. Then a rich man showed up, polite, in a suit, saying he studied the Other Side and wanted to study it with us. Your father."
+
+"He bought that hospital. Built the underground. And we figured out fast that we weren't students. We were test subjects. He wanted to bring the God of Death to life, and for that he needed living people. Two patient files. That's what we became."
+
+"Aline was hired to run the experiments. She hated what she saw. When she realized your father was going to give up on the project and leave us down there forever, she opened the doors. Set us free. And stayed with us."
+
+"We kept up the studies on our own, in the same hospital. And we planned the mansion. We made it look like it was only the paranormal: the eight-legged thing, the Blood, all of it. No one ever went looking for people." He shrugs. "I wanted him to survive. To see what he'd lost. But he died. Only you and your brother were left."
+
+"And then, years later, who comes knocking at our door? Eros Wezen. Asking for help to bring his dead sister back. Crying. Offering anything. He never knew a thing. He did everything we asked. Joined the Order, betrayed his own team." He smiles. "It was too easy."
+
+He finally looks at the capsule. "Your father started this. I'm just finishing it."`,
+`Formiga no deja de manejar el panel mientras habla. Habla como quien lo ensayó muchas veces, solo.
+
+"Lukas y yo teníamos diecisiete años. Último año de secundaria. Vivíamos detrás de lo paranormal: foros, libros viejos, cementerios de madrugada. Entonces apareció un hombre rico, educado, de traje, diciendo que estudiaba el Otro Lado y que quería estudiarlo con nosotros. Tu padre."
+
+"Compró aquel hospital. Armó el subterráneo. Y descubrimos rápido que no éramos alumnos. Éramos cobayas. Quería darle vida al Dios de la Muerte, y para eso necesitaba gente viva. Dos fichas de paciente. En eso nos convertimos."
+
+"A Aline la contrataron para dirigir los experimentos. Odiaba lo que veía. Cuando se dio cuenta de que tu padre iba a abandonar el proyecto y dejarnos allá abajo para siempre, abrió las puertas. Nos soltó. Y se quedó con nosotros."
+
+"Seguimos los estudios por nuestra cuenta, en el mismo hospital. Y planeamos la mansión. Hicimos que pareciera solo lo paranormal: la cosa de ocho patas, la Sangre, todo. Nadie buscó nunca a personas." Se encoge de hombros. "Yo quería que él sobreviviera. Para que viera lo que había perdido. Pero murió. Solo quedaron tú y tu hermano."
+
+"Y entonces, años después, ¿quién golpea nuestra puerta? Eros Wezen. Pidiendo ayuda para traer de vuelta a su hermana muerta. Llorando. Ofreciendo cualquier cosa. Nunca supo nada. Hizo todo lo que le pedimos. Entró en la Orden, traicionó a su propio equipo." Sonríe. "Fue demasiado fácil."
+
+Por fin mira la cápsula. "Tu padre empezó esto. Yo solo lo estoy terminando."`)),
+  choices:()=>[
+    {label:L('Apertar a lança com força','Grip your spear tight','Apretar la lanza con fuerza'),main:true,
+      run:()=>({text:addClue('verdade')+loseSan('1d4',L('a verdade','the truth','la verdad')),go:'a7_carnicais'})}
   ]},
 
 a7_carnicais:{act:CH7,title:L('Três','Three','Tres'),
@@ -1925,7 +2045,7 @@ function renderTitle(){
       <dl>
         <dt>${L('Testes','Rolls','Tiradas')}</dt><dd>${L('Role um d20 para cada ponto do atributo da perícia e fique com o <b>maior</b>. Some +5 se for treinada. Iguale ou supere a DT. Com atributo 0, role 2d20 e fique com o <b>menor</b>.','Roll one d20 per point in the skill\'s attribute and keep the <b>highest</b>. Add +5 if trained. Meet or beat the DC. With attribute 0, roll 2d20 and keep the <b>lowest</b>.','Tira un d20 por cada punto del atributo de la pericia y quédate con el <b>mayor</b>. Suma +5 si está entrenada. Iguala o supera la CD. Con atributo 0, tira 2d20 y quédate con el <b>menor</b>.')}</dd>
         <dt>${L('Perícias','Skills','Pericias')}</dt><dd>${L('28 perícias. As marcadas com <b>*</b> só podem ser usadas se você for treinada. As marcadas com <b>+</b> sofrem −5 de penalidade de carga com proteção pesada ou escudo.','28 skills. Those marked <b>*</b> can only be used if you\'re trained. Those marked <b>+</b> take a −5 load penalty with heavy armor or a shield.','28 pericias. Las marcadas con <b>*</b> solo se pueden usar si estás entrenada. Las marcadas con <b>+</b> sufren −5 de penalización de carga con protección pesada o escudo.')}</dd>
-        <dt>${L('Equipamento','Gear','Equipo')}</dt><dd>${L('Você requisita equipamento dentro da história. Recruta: até 2 itens de categoria I. Operador: 3 de categoria I e 1 de categoria II. Carga: 5 espaços por ponto de Força (máximo 15). Crime, Medicina e Tecnologia sofrem −5 sem o kit.','You requisition gear during the story. Recruit: up to 2 category I items. Operator: 3 category I and 1 category II. Load: 5 spaces per point of Strength (max 15). Crime, Medicine and Technology take −5 without the kit.','Solicitas equipo dentro de la historia. Recluta: hasta 2 objetos de categoría I. Operador: 3 de categoría I y 1 de categoría II. Carga: 5 espacios por punto de Fuerza (máximo 15). Crimen, Medicina y Tecnología sufren −5 sin el kit.')}</dd>
+        <dt>${L('Equipamento','Gear','Equipo')}</dt><dd>${L('Você requisita equipamento dentro da história. Recruta: até 2 itens de categoria I. Operador: 3 de categoria I e 1 de categoria II. Mochila: 15 espaços. Crime, Medicina e Tecnologia sofrem −5 sem o kit.','You requisition gear during the story. Recruit: up to 2 category I items. Operator: 3 category I and 1 category II. Backpack: 15 spaces. Crime, Medicine and Technology take −5 without the kit.','Solicitas equipo dentro de la historia. Recluta: hasta 2 objetos de categoría I. Operador: 3 de categoría I y 1 de categoría II. Mochila: 15 espacios. Crimen, Medicina y Tecnología sufren −5 sin el kit.')}</dd>
         <dt>${L('PV · PE · SAN','HP · EP · SAN','PV · PE · SAN')}</dt><dd>${L('Zerar PV ou Sanidade encerra a tentativa e você volta ao último ponto de controle. Quanto menor a Sanidade, mais a tela se distorce.','Reaching 0 HP or Sanity ends the attempt and you return to the last checkpoint. The lower your Sanity, the more the screen distorts.','Llegar a 0 PV o Cordura termina el intento y vuelves al último punto de control. Cuanto menor la Cordura, más se distorsiona la pantalla.')}</dd>
         <dt>${L('Combate','Combat','Combate')}</dt><dd>${L('Ataque com Luta ou Pontaria contra a Defesa. A margem de ameaça da arma define o crítico, que multiplica os dados. Aliados lutam ao seu lado sozinhos. Algumas lutas não são para vencer, e sim para sobreviver.','Attack with Fighting or Marksmanship against Defense. The weapon\'s threat range sets the critical, which multiplies the dice. Allies fight beside you on their own. Some fights aren\'t about winning, but surviving.','Ataca con Lucha o Puntería contra la Defensa. El margen de amenaza del arma define el crítico, que multiplica los dados. Los aliados pelean a tu lado solos. Algunas peleas no son para ganar, sino para sobrevivir.')}</dd>
         <dt>${L('Vínculos e suspeitas','Bonds and suspicions','Vínculos y sospechas')}</dt><dd>${L('O que você conversa cria vínculos, e vínculos mudam momentos decisivos. Prestar atenção nos colegas pode revelar quem está mentindo antes que seja tarde.','Your conversations create bonds, and bonds change decisive moments. Paying attention to your teammates can reveal who\'s lying before it\'s too late.','Lo que conversas crea vínculos, y los vínculos cambian momentos decisivos. Prestar atención a tus compañeros puede revelar quién miente antes de que sea tarde.')}</dd>
@@ -2048,7 +2168,7 @@ function renderGear(){
       return `${sub}<div class="gi"><div class="gi-t"><b>${it.name}</b> <span class="cat c${it.cat}">${CAT[it.cat]}</span> <small>${it.sp} ${esp}${itemStats(it)?' · '+itemStats(it):''}${noProf?' · <em>'+L('sem proficiência','not proficient','sin competencia')+'</em>':''}</small><p>${it.desc||''}</p></div><button class="sbtn add" data-a="g-add" data-id="${k}" ${w?'disabled':''}>${w||L('Adicionar','Add','Agregar')}</button></div>`}).join('')}</details>`}).join('');
   const warns=gearWarnings(inv,D.cls),probs=gearProblems(inv,D.attr.FOR);
   return `<div class="step"><h2>${L('Requisição de equipamento','Gear requisition','Solicitud de equipo')}</h2>
-   <p class="hint">${L('Patente','Rank','Rango')} <b>${PATENTE.name}</b>: ${Object.entries(PATENTE.lim).map(([c,l])=>L(`até <b>${l} de categoria ${CAT[c]}</b>`,`up to <b>${l} category ${CAT[c]}</b>`,`hasta <b>${l} de categoría ${CAT[c]}</b>`)).join(', ')} ${L('e quantos quiser de categoria 0. Cada modificação sobe a categoria do item em 1. Você carrega 5 espaços por ponto de Força (máximo 15).','and as many category 0 as you like. Each modification raises an item\'s category by 1. You carry 5 spaces per point of Strength (max 15).','y todos los de categoría 0 que quieras. Cada modificación sube la categoría del objeto en 1. Cargas 5 espacios por punto de Fuerza (máximo 15).')}</p>
+   <p class="hint">${L('Patente','Rank','Rango')} <b>${PATENTE.name}</b>: ${Object.entries(PATENTE.lim).map(([c,l])=>L(`até <b>${l} de categoria ${CAT[c]}</b>`,`up to <b>${l} category ${CAT[c]}</b>`,`hasta <b>${l} de categoría ${CAT[c]}</b>`)).join(', ')} ${L('e quantos quiser de categoria 0. Cada modificação sobe a categoria do item em 1. Sua mochila tem 15 espaços.','and as many category 0 as you like. Each modification raises an item\'s category by 1. Your backpack holds 15 spaces.','y todos los de categoría 0 que quieras. Cada modificación sube la categoría del objeto en 1. Tu mochila tiene 15 espacios.')}</p>
    <div class="gear-head"><span>${L('Espaços','Spaces','Espacios')} <b class="${used>cap?'bad':''}">${used}/${cap}</b></span>${Object.entries(PATENTE.lim).map(([c,l])=>{const n=catCount(inv,+c);return `<span>${L('Categoria','Category','Categoría')} ${CAT[c]} <b class="${n>l?'bad':''}">${n}/${l}</b></span>`}).join('')}<span>${L('Deslocamento','Movement','Desplazamiento')} <b>9 m</b></span>
    <span class="sp"></span><button class="sbtn" data-a="g-suggest">${L('Kit sugerido','Suggested kit','Kit sugerido')}</button><button class="sbtn" data-a="g-clear" ${inv.length?'':'disabled'}>${L('Esvaziar','Clear','Vaciar')}</button></div>
    ${probs.length?`<div class="warn">${probs.join(' · ')}</div>`:''}
@@ -2350,7 +2470,7 @@ async function playerAction(kind,arg){
   if(C.script&&SCRIPTS[C.script].round)SCRIPTS[C.script].round(C);
   busy=false;save();render();
 }
-function switchWeapon(uid){
+function switchWeapon(uid){if(S.combat&&(S.combat.dropped||[]).includes(arguments[0]))return;
   if(busy||!S.combat)return;
   const target=weaponList().find(x=>x.inst.uid===uid);if(!target)return;
   const free=hasItem('bandoleira')||target.inst.mods.includes('tatica_m')||target.inst.mods.includes('tatica_f')||uid==='_desarmado';
@@ -2422,7 +2542,8 @@ function winCombat(custom){
 function leaveCombat(){
   const C=S.combat;if(!C||!C.over)return;
   if(C.over.down){S.combat=null;checkDown();return}
-  const after=C.after,txt=C.over.txt;
+  const after=C.after;let txt=C.over.txt;
+  if(C.dropped&&C.dropped.length){const inst=S.inv.find(i=>i.uid===C.dropped[0]);if(inst){S.equip=inst.uid;txt+=' '+L(`Depois, você recupera a sua arma do chão (${ITEMS[inst.id].name}).`,`Afterwards, you pick your weapon back up off the ground (${ITEMS[inst.id].name}).`,`Después, recoges tu arma del suelo (${ITEMS[inst.id].name}).`)}}
   S.combat=null;S.treatReady=true;
   S.screen='game';S.scene=after;S.outcome=`<p>${txt}</p>`;S.outcomeCls='ok';
   if(SCENES[after]&&SCENES[after].checkpoint)setCheckpoint();
@@ -2436,6 +2557,13 @@ async function combatEnd(dead){
   if(C.script&&SCRIPTS[C.script].check){const r=SCRIPTS[C.script].check(C);if(r){busy=false;winCombat(r);return true}}
   return false;
 }
+function disarm(C){
+  const w=equipped();
+  if(w.inst.uid==='_desarmado'){cline(L('Aline te acerta com o cabo da espada. Você recua, sem ar, por um segundo.','Aline strikes you with the pommel of her sword. You fall back, breathless, for a second.','Aline te golpea con el pomo de la espada. Retrocedes, sin aire, por un segundo.'),'hit');return}
+  C.dropped=(C.dropped||[]).concat(w.inst.uid);S.equip='_desarmado';
+  const others=weaponList().length>1;
+  cline(L(`Um giro da espada de Aline arranca a arma da sua mão (${w.it.name}) e ela chuta para longe, no chão do túnel. Você está desarmada.`,`A twist of Aline's sword rips the weapon from your hand (${w.it.name}) and she kicks it away across the tunnel floor. You're disarmed.`,`Un giro de la espada de Aline te arranca el arma de la mano (${w.it.name}) y ella la patea lejos, por el suelo del túnel. Estás desarmada.`)+(others?L(' Dá para sacar outra arma (gasta sua ação).',' You can draw another weapon (costs your action).',' Puedes sacar otra arma (gasta tu acción).'):L(' Só sobram os punhos.',' Only your fists are left.',' Solo te quedan los puños.')),'hit');
+}
 const SCRIPTS={
   rogerjr:{
     check:C=>(C.round>=5||S.pv<=S.pvMax*.3)?SCRIPTS.rogerjr.end(C,'time'):null,
@@ -2446,7 +2574,7 @@ const SCRIPTS={
   },
   aline2:{
     check:C=>(C.round>=5||C.e.pv<=C.e.pvMax*.4||S.pv<=S.pvMax*.3)?SCRIPTS.aline2.end(C,'time'):null,
-    round:C=>{if(C.round===2)cline(L('Do outro lado do túnel, Luck grita: "Foi aqui que o seu irmãozinho gritou, Mada!" Mada ruge.','From across the tunnel, Luck shouts: "This is where your little brother screamed, Mada!" Mada roars.','Desde el otro lado del túnel, Luck grita: "¡Aquí fue donde gritó tu hermanito, Mada!" Mada ruge.'));if(C.round===3)cline(L('Aline derruba a sua arma com um giro de espada. Você recua desarmada por um segundo.','Aline knocks your weapon away with a twist of her sword. You fall back disarmed for a second.','Aline te tumba el arma con un giro de espada. Retrocedes desarmada por un segundo.'),'hit');if(C.round===4)cline(L('Mada acerta Luck, larga ele no chão e vem correndo na sua direção.','Mada lands a hit on Luck, leaves him on the ground and comes running toward you.','Mada le acierta a Luck, lo deja en el suelo y viene corriendo hacia ti.'))},
+    round:C=>{if(C.round===2)cline(L('Do outro lado do túnel, Luck grita: "Foi aqui que o seu irmãozinho gritou, Mada!" Mada ruge.','From across the tunnel, Luck shouts: "This is where your little brother screamed, Mada!" Mada roars.','Desde el otro lado del túnel, Luck grita: "¡Aquí fue donde gritó tu hermanito, Mada!" Mada ruge.'));if(C.round===3)disarm(C);if(C.round===4)cline(L('Mada acerta Luck, larga ele no chão e vem correndo na sua direção.','Mada lands a hit on Luck, leaves him on the ground and comes running toward you.','Mada le acierta a Luck, lo deja en el suelo y viene corriendo hacia ti.'))},
     end:(C,why)=>{const b=S.pv;S.pv=Math.max(S.pv,Math.ceil(S.pvMax*.6));const healed=S.pv-b;
       return (why==='down'?L('Você cai de costas. A espada de Aline sobe. ','You fall on your back. Aline\'s sword rises. ','Caes de espaldas. La espada de Aline se alza. '):'')+
       L('Mada chega por trás. Ele vê o movimento da espada dela: três cortes, da esquerda para a direita.','Mada comes up behind her. He sees the motion of her sword: three cuts, left to right.','Mada llega por detrás. Ve el movimiento de su espada: tres cortes, de izquierda a derecha.')+
